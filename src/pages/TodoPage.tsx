@@ -64,33 +64,40 @@ const TodoPage = () => {
     titleInputRef.current?.focus();
   };
 
+  const doneTodos = todos.filter((todo) => todo.isDone);
+  const undoneTodos = todos.filter((todo) => !todo.isDone);
+
   return (
     <main className="h-screen bg-gray-100 flex justify-center items-center">
       <div className="p-12 bg-white flex flex-col gap-4 rounded-2xl shadow-md">
         <h1 className="font-semibold text-3xl text-blue-500">To Do List</h1>
         <section className="flex flex-col gap-2 overflow-scroll max-h-[400px]">
-          <h2 className="font-semibold text-lg text-gray-500">할 일</h2>
-          {todos
-            .filter((todo) => !todo.isDone)
-            .map((todo) => (
-              <Todo
-                key={todo.id}
-                todo={todo}
-                deleteTodo={deleteTodo}
-                toggleTodo={toggleTodo}
-              />
-            ))}
-          <h2 className="font-semibold text-lg text-gray-500">완료</h2>
-          {todos
-            .filter((todo) => todo.isDone)
-            .map((todo) => (
-              <Todo
-                key={todo.id}
-                todo={todo}
-                deleteTodo={deleteTodo}
-                toggleTodo={toggleTodo}
-              />
-            ))}
+          {undoneTodos.length !== 0 ? (
+            <h2 className="font-semibold text-lg text-gray-500">할 일</h2>
+          ) : (
+            <></>
+          )}
+          {undoneTodos.map((todo) => (
+            <Todo
+              key={todo.id}
+              todo={todo}
+              deleteTodo={deleteTodo}
+              toggleTodo={toggleTodo}
+            />
+          ))}
+          {doneTodos.length !== 0 ? (
+            <h2 className="font-semibold text-lg text-gray-500">완료</h2>
+          ) : (
+            <></>
+          )}
+          {doneTodos.map((todo) => (
+            <Todo
+              key={todo.id}
+              todo={todo}
+              deleteTodo={deleteTodo}
+              toggleTodo={toggleTodo}
+            />
+          ))}
         </section>
         <section
           onSubmit={(event) => {
