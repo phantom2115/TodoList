@@ -1,7 +1,7 @@
 import Input from "../components/Input";
 import Button from "../components/Button";
 import Todo from "../components/Todo";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TodoType } from "../types/todo";
 
 const TodoPage = () => {
@@ -10,6 +10,16 @@ const TodoPage = () => {
   const [todos, setTodos] = useState<TodoType[]>(
     JSON.parse(localStorage.getItem("todos") || "[]")
   );
+
+  const titleInputRef = useRef<HTMLInputElement | null>(null);
+
+  const focusInput = () => {
+    titleInputRef.current?.focus();
+  };
+
+  useEffect(() => {
+    focusInput();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -31,6 +41,7 @@ const TodoPage = () => {
     setTodos([...todos, newTodo]);
     setTodoTitle("");
     setTodoContent("");
+    focusInput();
   };
 
   const deleteTodo = (id: TodoType["id"]) => {
@@ -39,6 +50,7 @@ const TodoPage = () => {
         return id !== todo.id;
       })
     );
+    focusInput();
   };
 
   const toggleTodo = (selectedTodo: TodoType) => {
@@ -49,6 +61,7 @@ const TodoPage = () => {
       }),
       updatedTodo,
     ]);
+    titleInputRef.current?.focus();
   };
 
   return (
@@ -91,6 +104,7 @@ const TodoPage = () => {
               value={todoTitle}
               setValue={setTodoTitle}
               maxLength={10}
+              ref={titleInputRef}
             />
             <Input
               placeholder="내용"
