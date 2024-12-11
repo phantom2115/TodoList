@@ -9,7 +9,7 @@ const Todo = ({ todo, deleteTodo, toggleTodo }: TodoProps) => {
   return (
     <div>
       <div
-        className={`flex justify-between gap-5 rounded-md ${
+        className={`flex justify-between items-center gap-5 rounded-md ${
           todo.isDone ? "bg-blue-100" : "bg-gray-50 "
         } px-3`}
       >

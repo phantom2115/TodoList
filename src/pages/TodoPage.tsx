@@ -16,6 +16,12 @@ const TodoPage = () => {
   }, [todos]);
 
   const addTodo = () => {
+    if (!todoTitle) {
+      return alert("제목을 입력해주세요");
+    }
+    if (!todoContent) {
+      return alert("내용을 입력해주세요");
+    }
     const newTodo = {
       id: crypto.randomUUID(),
       title: todoTitle,
@@ -79,16 +85,18 @@ const TodoPage = () => {
             addTodo();
           }}
         >
-          <form className="grid grid-cols-[1fr,2fr,0.5fr] gap-2">
+          <form className="grid grid-cols-[2fr,4fr,1fr] gap-2">
             <Input
               placeholder="제목"
               value={todoTitle}
               setValue={setTodoTitle}
+              maxLength={10}
             />
             <Input
               placeholder="내용"
               value={todoContent}
               setValue={setTodoContent}
+              maxLength={40}
             />
             <Button
               type={"submit"}
