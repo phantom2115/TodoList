@@ -1,10 +1,17 @@
-interface ButtonProps {
-  children: string;
-  className: string;
-}
-const Button = ({ className, children }: ButtonProps) => {
+import { ComponentProps } from "react";
+
+const Button = ({
+  type,
+  className,
+  onClick,
+  children,
+}: ComponentProps<"button">) => {
   return (
-    <button className={`shrink-0 px-7 py-2 rounded-md ${className}`}>
+    <button
+      type={type}
+      className={`shrink-0 px-7 py-2 rounded-md ${className}`}
+      onClick={onClick}
+    >
       {children}
     </button>
   );
